@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEXNET Empresas — Missão & Valores</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --teal-dark:   #0a4d3c;
+    --teal-mid:    #0F6E56;
+    --teal-light:  #1D9E75;
+    --teal-pale:   #9FE1CB;
+    --blue-dark:   #0c3d6e;
+    --blue-mid:    #185FA5;
+    --blue-light:  #378ADD;
+    --blue-pale:   #B5D4F4;
+    --white:       #ffffff;
+    --off-white:   #f0f4f8;
+    --gray-light:  #e2eaf2;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    background: #05293f;
+    font-family: 'Lato', sans-serif;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ── BACKGROUND ── */
+  .bg {
+    position: fixed; inset: 0; z-index: 0;
+    background: linear-gradient(145deg, #04243a 0%, #062d4a 40%, #071f38 80%, #041820 100%);
+  }
+  .bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 15% 50%, rgba(15,110,86,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 85% 30%, rgba(24,95,165,0.15) 0%, transparent 60%);
+  }
+  .bg-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* ── LAYOUT ── */
+  .wrapper {
+    position: relative; z-index: 1;
+    width: 100%; height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 2.8vh 3.5vw 2vh;
+    gap: 2.2vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(157,225,203,0.2);
+    padding-bottom: 1.6vh;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .logo-mark {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--teal-light), var(--blue-mid));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-mark svg { width: 24px; height: 24px; fill: white; }
+  .logo-text { line-height: 1; }
+  .logo-text .brand {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(18px, 2.2vw, 28px);
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: white;
+  }
+  .logo-text .brand span { color: var(--teal-pale); }
+  .logo-text .sub {
+    font-size: clamp(9px, 0.85vw, 12px);
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 2px;
+  }
+  .header-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(13px, 1.4vw, 20px);
+    font-weight: 300;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+  .header-title strong {
+    font-weight: 700;
+    color: var(--teal-pale);
+  }
+
+  /* ── MAIN GRID ── */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1.6vh 1.4vw;
+    align-items: stretch;
+  }
+
+  /* ── CARD BASE ── */
+  .card {
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 16px;
+    padding: clamp(14px, 2vh, 24px) clamp(16px, 1.8vw, 28px);
+    backdrop-filter: blur(8px);
+    display: flex; flex-direction: column;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card.visible { opacity: 1; transform: translateY(0); }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 16px 16px 0 0;
+  }
+  .card.teal::after  { background: linear-gradient(90deg, var(--teal-light), var(--teal-pale)); }
+  .card.blue::after  { background: linear-gradient(90deg, var(--blue-mid), var(--blue-pale)); }
+  .card.purple::after{ background: linear-gradient(90deg, #7F77DD, #AFA9EC); }
+  .card.gold::after  { background: linear-gradient(90deg, #BA7517, #FAC775); }
+
+  .card-icon {
+    width: clamp(32px, 3.5vh, 44px);
+    height: clamp(32px, 3.5vh, 44px);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: clamp(8px, 1.2vh, 14px);
+    flex-shrink: 0;
+  }
+  .card-icon svg { width: 55%; height: 55%; }
+
+  .card.teal  .card-icon { background: rgba(29,158,117,0.2); }
+  .card.blue  .card-icon { background: rgba(24,95,165,0.2); }
+  .card.purple .card-icon { background: rgba(127,119,221,0.2); }
+  .card.gold  .card-icon { background: rgba(186,117,23,0.2); }
+
+  .card-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(9px, 0.8vw, 11px);
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: clamp(5px, 0.8vh, 10px);
+  }
+  .card.teal   .card-label { color: var(--teal-pale); }
+  .card.blue   .card-label { color: var(--blue-pale); }
+  .card.purple .card-label { color: #AFA9EC; }
+  .card.gold   .card-label { color: #FAC775; }
+
+  .card-body {
+    font-size: clamp(12px, 1.1vw, 16px);
+    color: rgba(255,255,255,0.82);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  /* ── CARD VALORES (span) ── */
+  .card-valores {
+    grid-row: 1 / 3;
+    grid-column: 3;
+  }
+  .valores-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 4px;
+    flex: 1;
+  }
+  .valor-pill {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: clamp(7px, 1vh, 12px) clamp(10px, 1vw, 16px);
+    display: flex; align-items: center; gap: 8px;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .valor-pill.visible { opacity: 1; transform: translateX(0); }
+  .valor-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--teal-pale);
+    flex-shrink: 0;
+  }
+  .valor-pill span {
+    font-size: clamp(11px, 0.9vw, 14px);
+    color: rgba(255,255,255,0.8);
+    font-weight: 400;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2vw;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    padding-top: 1.4vh;
+  }
+  .footer-item {
+    display: flex; align-items: center; gap: 10px;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .footer-badge {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .footer-badge svg { width: 16px; height: 16px; fill: white; }
+  .footer-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(10px, 0.9vw, 13px);
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .footer-sep {
+    width: 1px; height: 28px;
+    background: rgba(255,255,255,0.15);
+  }
+
+  /* ── PULSING DOTS decoração ── */
+  .deco-dot {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: pulse 4s ease-in-out infinite;
+    z-index: 0;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.12; transform: scale(1); }
+    50%       { opacity: 0.22; transform: scale(1.08); }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg">
+  <div class="bg-grid"></div>
+</div>
+
+<!-- Decorative blobs -->
+<div class="deco-dot" style="width:300px;height:300px;bottom:-80px;left:-60px;background:var(--teal-mid);animation-delay:0s;"></div>
+<div class="deco-dot" style="width:220px;height:220px;top:-50px;right:10%;background:var(--blue-mid);animation-delay:1.5s;"></div>
+
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 3h7v7H3zm0 11h7v7H3zm11-11h7v7h-7zm0 11h7v7h-7z"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <div class="brand">TEX<span>NET</span></div>
+        <span class="sub">Empresas</span>
+      </div>
+    </div>
+    <div class="header-title"><strong>Missão</strong> &amp; Valores</div>
+  </header>
+
+  <!-- MAIN -->
+  <div class="main-grid">
+
+    <!-- MISSÃO -->
+    <div class="card teal" id="c1">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#9FE1CB" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>
+          <line x1="12" y1="3" x2="12" y2="1"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="3" y1="12" x2="1" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+        </svg>
+      </div>
+      <div class="card-label">Missão</div>
+      <div class="card-body">
+        Buscar incansavelmente soluções que superem as expectativas de nossos clientes.
+      </div>
+    </div>
+
+    <!-- VISÃO -->
+    <div class="card blue" id="c2">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#B5D4F4" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+      </div>
+      <div class="card-label">Visão</div>
+      <div class="card-body">
+        Ser lembrado e indicado intuitivamente como produto de qualidade, ampliando nossa gama de serviços e solucionando o máximo de problemas e necessidades do cliente.
+      </div>
+    </div>
+
+    <!-- VALORES (span 2 rows) -->
+    <div class="card purple card-valores" id="c3">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#AFA9EC" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+        </svg>
+      </div>
+      <div class="card-label">Nossos Valores</div>
+      <div class="valores-grid">
+        <div class="valor-pill" id="vp1"><div class="valor-dot"></div><span>Compromisso</span></div>
+        <div class="valor-pill" id="vp2"><div class="valor-dot" style="background:#B5D4F4"></div><span>Criatividade</span></div>
+        <div class="valor-pill" id="vp3"><div class="valor-dot"></div><span>Disponibilidade</span></div>
+        <div class="valor-pill" id="vp4"><div class="valor-dot" style="background:#B5D4F4"></div><span>Empatia</span></div>
+        <div class="valor-pill" id="vp5"><div class="valor-dot"></div><span>Foco em Solução</span></div>
+        <div class="valor-pill" id="vp6"><div class="valor-dot" style="background:#B5D4F4"></div><span>Honestidade</span></div>
+        <div class="valor-pill" id="vp7"><div class="valor-dot"></div><span>Proatividade</span></div>
+        <div class="valor-pill" id="vp8"><div class="valor-dot" style="background:#B5D4F4"></div><span>Respeito</span></div>
+      </div>
+    </div>
+
+    <!-- NOSSO NEGÓCIO -->
+    <div class="card gold" id="c4" style="grid-column:1/3;">
+      <div style="display:flex; align-items:center; gap: 2vw; height:100%;">
+        <div class="card-icon" style="margin-bottom:0; width:clamp(38px,4.5vh,54px); height:clamp(38px,4.5vh,54px);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#FAC775" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+            <polyline points="17 6 23 6 23 12"/>
+          </svg>
+        </div>
+        <div style="flex:1">
+          <div class="card-label" style="color:#FAC775; margin-bottom:clamp(4px,0.7vh,10px);">Nosso Negócio</div>
+          <div style="display:flex; gap:clamp(12px,2vw,32px); align-items:center; flex-wrap:wrap;">
+            <div style="text-align:center;">
+              <div style="font-family:'Montserrat',sans-serif; font-size:clamp(20px,2.8vw,38px); font-weight:800; color:#FAC775; line-height:1;">Q</div>
+              <div style="font-size:clamp(10px,0.85vw,13px); color:rgba(255,255,255,0.55); letter-spacing:2px; text-transform:uppercase; margin-top:3px;">Qualidade</div>
+            </div>
+            <div style="width:1px; height:36px; background:rgba(255,255,255,0.12);"></div>
+            <div style="text-align:center;">
+              <div style="font-family:'Montserrat',sans-serif; font-size:clamp(20px,2.8vw,38px); font-weight:800; color:#FAC775; line-height:1;">S</div>
+              <div style="font-size:clamp(10px,0.85vw,13px); color:rgba(255,255,255,0.55); letter-spacing:2px; text-transform:uppercase; margin-top:3px;">Segurança</div>
+            </div>
+            <div style="width:1px; height:36px; background:rgba(255,255,255,0.12);"></div>
+            <div style="text-align:center;">
+              <div style="font-family:'Montserrat',sans-serif; font-size:clamp(20px,2.8vw,38px); font-weight:800; color:#FAC775; line-height:1;">A</div>
+              <div style="font-size:clamp(10px,0.85vw,13px); color:rgba(255,255,255,0.55); letter-spacing:2px; text-transform:uppercase; margin-top:3px;">Agilidade</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main-grid -->
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-item" style="animation-delay:1.8s;">
+      <div class="footer-badge" style="background:rgba(29,158,117,0.3);">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" fill="#9FE1CB"/></svg>
+      </div>
+      <span class="footer-text">Qualidade em primeiro lugar</span>
+    </div>
+    <div class="footer-sep"></div>
+    <div class="footer-item" style="animation-delay:2s;">
+      <div class="footer-badge" style="background:rgba(24,95,165,0.3);">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="#B5D4F4"/></svg>
+      </div>
+      <span class="footer-text">Foco no cliente</span>
+    </div>
+    <div class="footer-sep"></div>
+    <div class="footer-item" style="animation-delay:2.2s;">
+      <div class="footer-badge" style="background:rgba(127,119,221,0.3);">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1l3.09 6.26L22 8.27l-5 4.87 1.18 6.88L12 16.77l-6.18 3.25L7 13.14 2 8.27l6.91-1.01L12 1z" fill="#AFA9EC"/></svg>
+      </div>
+      <span class="footer-text">Excelência em serviços</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  function animateCards() {
+    const cards = ['c1','c2','c3','c4'];
+    const delays = [100, 250, 400, 600];
+    cards.forEach((id, i) => {
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('visible');
+      }, delays[i]);
+    });
+
+    const pills = ['vp1','vp2','vp3','vp4','vp5','vp6','vp7','vp8'];
+    pills.forEach((id, i) => {
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('visible');
+      }, 700 + i * 90);
+    });
+  }
+
+  window.addEventListener('load', animateCards);
+</script>
+</body>
+</html>
